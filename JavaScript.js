@@ -138,10 +138,18 @@ function saveTasksToStorage() {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 function loadTasksFromStorage() {
-  // 初期状態ではlocalStorageをクリアして空の状態にする
-  localStorage.removeItem('tasks');
-  tasks = [];
+  const data = localStorage.getItem('tasks');
+  if (data) {
+    try {
+      tasks = JSON.parse(data);
+    } catch (e) {
+      tasks = [];
+    }
+  }
 }
+
+// 初期化時にlocalStorageから復元
+loadTasksFromStorage();
 
 // カード描画関数
 function renderTasks() {
@@ -452,7 +460,6 @@ saveBtn.onclick = () => {
 };
 
 // 初期描画
-loadTasksFromStorage();
 renderTasks();
 
 // 課題完了処理
