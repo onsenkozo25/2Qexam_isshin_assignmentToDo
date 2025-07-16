@@ -476,6 +476,7 @@ body.dark #milestone-list-ui input[type="text"]::placeholder {
   align-items: center;
 }
 .card-milestone-list input[type="checkbox"] {
+  pointer-events: auto !important;
   margin-right: 0.5em;
   accent-color: var(--chalk-yellow);
   width: 1.1em;
@@ -565,6 +566,7 @@ body.dark #milestone-list-ui input[type="text"]::placeholder {
   opacity: 0;
   transition: opacity 0.2s, background 0.2s;
   user-select: none;
+  pointer-events: none;
 }
 #complete-area-left {
   left: 0;
