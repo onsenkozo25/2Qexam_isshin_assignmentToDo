@@ -156,9 +156,9 @@ function renderTasks() {
   taskBoard.innerHTML = '';
   let filteredTasks = tasks;
   if (currentStatus === 'inprogress') {
-    filteredTasks = tasks.filter(task => !task.completed);
+    filteredTasks = tasks.filter(t => !t.completed);
   } else if (currentStatus === 'completed') {
-    filteredTasks = tasks.filter(task => task.completed);
+    filteredTasks = tasks.filter(t => t.completed);
   }
   filteredTasks.forEach(task => {
     const card = document.createElement("div");
@@ -178,14 +178,13 @@ function renderTasks() {
       <h3 class="card-title">${task.title}</h3>
       <div class="card-timer">
         <span class="timer-main">${task.timeStr}</span>
-        <div class="timer-labels"><span>days</span> <span>hr</span> <span>min</span></div>
-        </div>
+      </div>
       <div class="card-icons">
         <span class="classroom-icon" title="Classroomへ"></span>
         <span class="note-icon" title="備考"></span>
       </div>
       <ul class="card-milestone-list">
-        ${task.milestoneList.map((item, i) => `<li><label><input type='checkbox' class='milestone-check'><span>${item}</span></label></li>`).join('')}
+        ${(task.milestoneList || []).map((item, i) => `<li><label><input type='checkbox' class='milestone-check'><span>${item}</span></label></li>`).join('')}
       </ul>
       <div class="card-footer"></div>
     `;
@@ -427,10 +426,24 @@ saveBtn.onclick = () => {
   const link = document.getElementById("link-input").value;
   const note = document.getElementById("note-input").value;
   const priority = document.querySelector('input[name="priority"]:checked').value;
+
+  // デバッグ用
+  console.log("title:", title, "deadlineStr:", deadlineStr);
+
+  // 入力チェック
+  if (!title.trim()) {
+    alert("タイトルを入力してください。");
+    return;
+  }
+  if (!deadlineStr) {
+    alert("締切日時を入力してください。");
+    return;
+  }
+
   const deadline = new Date(deadlineStr);
   const now = new Date();
   const diffMs = deadline - now;
-  if (diffMs <= 0) {
+  if (diffMs <= 0 || isNaN(diffMs)) {
     alert("期限は未来の日時を入力してください。");
     return;
   }
@@ -446,7 +459,7 @@ saveBtn.onclick = () => {
     title, deadline: deadlineStr, link, note, priority, milestoneList,
     timeStr, deadlineStrShort, completed: false // 追加
   });
-  renderTasks();
+  renderTasks(); // ← 修正
   saveTasksToStorage();
   modal.classList.add("hidden");
   // フォームリセット
@@ -472,7 +485,7 @@ function completeTask(card) {
     const deadlineStrShort = card.querySelector('.card-deadline').textContent;
     const idx = tasks.findIndex(t => t.title === title && t.deadlineStrShort === deadlineStrShort);
     if (idx !== -1) {
-      tasks[idx].completed = true;
+      tasks[idx].completed = true; // 削除ではなく完了フラグ
       saveTasksToStorage();
     }
     renderTasks();

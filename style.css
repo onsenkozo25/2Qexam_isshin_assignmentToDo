@@ -47,6 +47,8 @@ header {
   font-size: 1.7em;
   font-weight: 600;
   letter-spacing: 0.05em;
+  z-index: 3000;
+  position: relative;
 }
 
 #toggle-theme {
@@ -284,10 +286,7 @@ body.dark #milestone-list-ui input[type="text"]::placeholder {
   display: none;
 }
 .timer-labels {
-  font-size: 0.8em;
-  color: #888;
-  margin-top: 0.1em;
-  letter-spacing: 0.15em;
+  display: none !important;
 }
 .card-milestone-list input[type="checkbox"]:checked + span {
   color: #888;
@@ -753,11 +752,16 @@ body.dark .footer-text {
   transform: translateY(-50%);
 }
 /* ヘッダーのテーマ切替アイコン */
+#header-theme-area {
+  z-index: 3000;
+  pointer-events: auto;
+}
 #header-theme-area img {
   filter: brightness(0) invert(1);
   background: none;
   transition: opacity 0.2s;
   opacity: 0.85;
+  pointer-events: auto;
 }
 #header-theme-area img:hover {
   opacity: 1;
@@ -837,6 +841,14 @@ body.dark footer {
 /* モーダル表示中はフッターの追加ボタンを非表示 */
 #modal:not(.hidden) ~ footer #add-task-btn {
   display: none !important;
+}
+
+#modal,
+.modal-content,
+.modal-actions button,
+#save-task {
+  pointer-events: auto !important;
+  z-index: 3200 !important;
 }
 
 
