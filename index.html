@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Assignment Todo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header style="display: flex; align-items: center; justify-content: center; gap: 1em; position: relative;">
+    <span id="motivation-message" style="font: size 0.8em; font-weight:500;"></span>
+    <!-- トップバーの右端にテーマ切替SVGを追加 -->
+    <div id="header-theme-area" style="position: absolute; right: 2em; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 0.5em;">
+      <img id="theme-light" src="light.svg" alt="ライトモード" style="width:32px;height:32px;cursor:pointer;">
+      <img id="theme-dark" src="dark.svg" alt="ダークモード" style="width:32px;height:32px;cursor:pointer;">
+    </div>
+  </header>
+
+  <main>
+    <div id="task-board"></div>
+  </main>
+
+  <div id="complete-area-left" class="complete-area">完了</div>
+  <div id="complete-area-right" class="complete-area">完了</div>
+
+  <div id="modal" class="hidden">
+    <div class="modal-content">
+      <h2>課題を追加</h2>
+      <label for="title-input">タイトル</label>
+      <input type="text" id="title-input">
+      <label for="deadline-input">締切日時</label>
+      <input type="datetime-local" id="deadline-input">
+      <label for="milestone-input">マイルストーン</label>
+      <div id="milestone-list-ui">
+        <input type="text" id="milestone-input" placeholder="マイルストーンを入力">
+        <button type="button" id="add-milestone-btn">＋追加</button>
+        <ul id="milestone-list"></ul>
+      </div>
+      <label for="priority-input">重要度</label>
+      <div id="priority-input" class="priority-color-select">
+        <input type="radio" name="priority" value="low" id="priority-low" checked>
+        <label for="priority-low" class="priority-circle low"></label>
+        <input type="radio" name="priority" value="medium" id="priority-medium">
+        <label for="priority-medium" class="priority-circle medium"></label>
+        <input type="radio" name="priority" value="high" id="priority-high">
+        <label for="priority-high" class="priority-circle high"></label>
+      </div>
+      <label for="note-input">備考</label>
+      <input type="text" id="note-input" placeholder="例: 提出前に確認することなど">
+      <label for="link-input">Classroomリンク</label>
+      <input type="url" id="link-input">
+      <div class="modal-actions">
+        <button id="close-modal">閉じる</button>
+        <button id="save-task">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-status-area">
+        <button id="show-inprogress" class="status-btn active">進行中</button>
+        <button id="show-completed" class="status-btn">完了</button>
+      </div>
+      <button id="add-task-btn">＋追加</button>
+    </div>
+  </footer>
+  <script src="JavaScript.js"></script>
+</body>
+</html>
